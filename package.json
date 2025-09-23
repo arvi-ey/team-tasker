@@ -1,0 +1,10 @@
+{
+    "name": "teamtasker",
+    "private": true,
+    "scripts": {
+        "client": "cd client && npm run dev",
+        "server": "cd server && npm run dev",
+        "install:all": "cd server && npm install && cd ../client && npm install",
+        "dev": "start /B npm run server && npm run client"
+    }
+}
