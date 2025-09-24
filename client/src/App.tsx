@@ -9,6 +9,8 @@ import Projects from './components/Projects/Projects'
 import { Toaster } from 'react-hot-toast'
 import ProtectedRoute from './components/protected/ProtectedRoute'
 import ProjectForm from './components/Projects/ProjectForm'
+import Tasks from './components/Tasks/Tasks'
+import TaskForm from './components/Tasks/TaskForm'
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
             <Route path="projects" element={<Projects />} />
             <Route path="/projects/create" element={<ProjectForm />} />
             <Route path="/projects/:id" element={<ProjectForm />} />
+            <Route path="/projects/:id/tasks" element={<Tasks />} />
+            <Route path="/projects/:id/tasks/create" element={<TaskForm />} />
+            <Route path="/projects/:id/tasks/edit/:taskid" element={<TaskForm />} />
           </Route>
         </Route>
       </Routes>

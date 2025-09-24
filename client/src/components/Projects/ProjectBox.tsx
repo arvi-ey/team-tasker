@@ -63,6 +63,7 @@ const ProjectBox: React.FC<ProjectBoxProps> = ({ project }) => {
 
             <div className="flex justify-end gap-2">
                 <div
+                    onClick={() => Navigate(`/projects/${project._id}/tasks`)}
 
                     className="flex items-center gap-1 px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg cursor-pointer hover:bg-indigo-700 transition"
                 >

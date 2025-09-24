@@ -7,7 +7,7 @@ export interface TaskDocument extends Document {
     startTime: Date;
     deadline: Date;
     status: 'pending' | 'inProgress' | 'completed';
-    assigned: Types.ObjectId[];
+    assigned: Types.ObjectId;
     project: Types.ObjectId;
 }
 
@@ -18,7 +18,7 @@ const taskSchema = new Schema<TaskDocument>(
         startTime: { type: Date, required: true },
         deadline: { type: Date, required: true },
         status: { type: String, enum: ['pending', 'inProgress', 'completed'], default: 'pending' },
-        assigned: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+        assigned: { type: Schema.Types.ObjectId, ref: 'User' },
         project: { type: Schema.Types.ObjectId, ref: 'Project', required: true },
     },
     {

@@ -8,6 +8,7 @@ import cors from 'cors';
 import { globalError } from './middlewares/errorHandeler.js';
 import AuthRouter from "./routes/auth/authRouter.js"
 import ProjectRouter from "./routes/project/projectRouter.js"
+import TaskRouter from "./routes/tasks/taskRouter.js"
 
 
 
@@ -36,6 +37,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use('/api/v1/auth', AuthRouter)
 app.use('/api/v1/projects', ProjectRouter)
+app.use('/api/v1/tasks', TaskRouter)
 
 
 app.use(globalError)

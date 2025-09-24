@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AddUserdata, ClearUser } from "../../redux/slices/userSlicer"
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from '../../redux/store';
-
+import { AddTeams } from '../../redux/slices/teamsSlicer';
 
 
 const useAuth = () => {
@@ -75,9 +75,24 @@ const useAuth = () => {
 
     }
 
+    const GetTeams = async () => {
+        setLoading(true)
+        try {
+            const result = await API.get(`auth/getteams`)
+            dispatch(AddTeams(result.data.data))
+            return result.data.data
+        }
+        catch (error: any) {
+            console.log(error?.message)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
 
 
-    return { UserSinUp, UserSinIn, UserSinOut, loading }
+
+    return { UserSinUp, UserSinIn, UserSinOut, loading, GetTeams }
 }
 
 export default useAuth

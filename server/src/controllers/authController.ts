@@ -82,3 +82,13 @@ export const CheckAuth = catchAsync(async (req: Request, res: Response, next: Ne
         data: user
     })
 })
+
+
+export const GetAllUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const result = await User.find()
+    if (!result) return next(new AppError('Error while fetching teams', 404))
+    res.status(200).json({
+        success: true,
+        data: result
+    })
+})
