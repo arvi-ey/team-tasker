@@ -3,7 +3,7 @@ import { CheckCircle, Star } from "lucide-react";
 const Home = () => {
     return (
         <div className="bg-white text-gray-800">
-            {/* Hero Section */}
+
             <div className="max-w-6xl mx-auto px-6 py-20 text-center">
                 <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                     Empower Your Team with <span className="text-[#9088F1]">Seamless</span> Collaboration
@@ -23,7 +23,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Stats */}
+
             <div className="bg-gray-50 py-12">
                 <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-8">
                     <div>
@@ -41,7 +41,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Features */}
+
             <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <h2 className="text-3xl font-bold mb-4">
@@ -57,8 +57,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Pricing */}
-            {/* Pricing Section */}
+
             <section className="bg-white py-20">
                 <div className="max-w-6xl mx-auto px-6 text-center">
                     <h2 className="text-4xl font-bold mb-10">
