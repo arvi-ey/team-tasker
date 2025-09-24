@@ -3,14 +3,15 @@ import API from '../api/ApiConfig';
 import type { Task } from "../types/tasktypes";
 import { useNavigate } from 'react-router-dom';
 import { AddTask, DeleteTask, SetTasks, UpdateTask } from '../../redux/slices/taskSlicer';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../redux/store';
+
 
 const useTask = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [loading, setLoading] = useState<boolean>(false);
-
+    const user = useSelector((state: RootState) => state.user.user);
 
     const createTask = async (payload: Task) => {
         setLoading(true);
@@ -42,11 +43,26 @@ const useTask = () => {
     };
 
 
+
+
     const deleteTask = async (id: string) => {
         setLoading(true);
         try {
             const result = await API.delete(`tasks/delete/${id}`);
             dispatch(DeleteTask(result.data.data));
+        } catch (error: any) {
+            console.log(error?.message);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const GetMyTasks = async () => {
+        setLoading(true);
+        try {
+            const result = await API.get(`tasks/mytasks/${user?._id}`);
+            dispatch(SetTasks(result.data.data));
         } catch (error: any) {
             console.log(error?.message);
             throw error;
@@ -88,7 +104,8 @@ const useTask = () => {
         updateTask,
         deleteTask,
         getTasksByProject,
-        getTaskById
+        getTaskById,
+        GetMyTasks
     };
 };
 

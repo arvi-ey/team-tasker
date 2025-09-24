@@ -17,10 +17,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
 
 
     const sideNavArray = [
-        { name: 'Analytics', path: '/', icon: <BarChart2 size={20} /> },
-        { name: 'Projects', path: '/projects', icon: <Folder size={20} /> },
-        { name: 'Tasks', path: '/tasks', icon: <CheckSquare size={20} /> },
-        { name: 'Team', path: '/team', icon: <Users size={20} /> },
+        { name: 'Projects', path: '/', icon: <Folder size={20} /> },
+        { name: 'My Tasks', path: '/mytasks', icon: <CheckSquare size={20} /> },
         { name: 'Logout', path: '/logout', icon: <LogOut size={20} color='red' /> },
     ];
 

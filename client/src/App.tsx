@@ -11,6 +11,8 @@ import ProtectedRoute from './components/protected/ProtectedRoute'
 import ProjectForm from './components/Projects/ProjectForm'
 import Tasks from './components/Tasks/Tasks'
 import TaskForm from './components/Tasks/TaskForm'
+import Mytasks from './components/Mytasks/Mytasks'
+import MyTaskForm from './components/Mytasks/MyTaskForm'
 
 function App() {
   return (
@@ -27,13 +29,14 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute />} >
           <Route path="/" element={<DashBoard />}>
-            <Route index element={<Analytics />} />
-            <Route path="projects" element={<Projects />} />
+            <Route index element={<Projects />} />
             <Route path="/projects/create" element={<ProjectForm />} />
             <Route path="/projects/:id" element={<ProjectForm />} />
             <Route path="/projects/:id/tasks" element={<Tasks />} />
             <Route path="/projects/:id/tasks/create" element={<TaskForm />} />
             <Route path="/projects/:id/tasks/edit/:taskid" element={<TaskForm />} />
+            <Route path="/mytasks" element={<Mytasks />} />
+            <Route path="/mytasks/:taskid" element={<MyTaskForm />} />
           </Route>
         </Route>
       </Routes>

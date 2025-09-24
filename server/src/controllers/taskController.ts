@@ -11,7 +11,6 @@ import { Types } from "mongoose";
 export const CreateTask = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { project, ...taskData } = req.body;
     const projectDoc = await Project.findById(project);
-    console.log(projectDoc)
     if (!projectDoc) return next(new AppError("Project not found", 404));
 
     const task = await Task.create({ ...taskData, project });
@@ -57,6 +56,21 @@ export const GetAllTasks = catchAsync(async (req: Request, res: Response, next: 
     const tasks = await Task.find().populate("assigned", "name email").populate("project", "name");
     res.status(200).json({
         success: true,
+        data: tasks,
+    });
+});
+
+
+export const getMyTasks = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.params;
+    console.log(userId)
+    const tasks = await Task.find({ assigned: userId })
+        .populate("project", "name")
+        .populate("assigned", "name email");
+
+    res.status(200).json({
+        success: true,
+        results: tasks.length,
         data: tasks,
     });
 });
