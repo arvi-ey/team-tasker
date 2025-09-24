@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { globalError } from './middlewares/errorHandeler.js';
 import AuthRouter from "./routes/auth/authRouter.js"
-
+import ProjectRouter from "./routes/project/projectRouter.js"
 
 
 
@@ -26,7 +26,7 @@ app.use(cookieParser())
 
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello, TypeScript Express!");
+    res.send("Hello");
 });
 
 
@@ -35,6 +35,7 @@ app.get("/", (req: Request, res: Response) => {
 // All Routes
 
 app.use('/api/v1/auth', AuthRouter)
+app.use('/api/v1/project', ProjectRouter)
 
 
 app.use(globalError)
