@@ -3,12 +3,15 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import type { RootState } from '../../../redux/store';
+import { useSelector } from 'react-redux';
 
 interface DashboardLayoutProps {
     heading?: string;
 }
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
+    const user = useSelector((state: RootState) => state.user.user);
     const location = useLocation()
     const pathName = location.pathname.substring(1);
     const Navigate = useNavigate()
@@ -64,6 +67,19 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
                         </NavLink>
                     ))}
                 </nav>
+                <div className='flex w-full mb-10 pl-3 gap-2'>
+                    <div className='size-10 rounded-full text-white bg-indigo-700 flex justify-center items-center'>
+                        {user?.name?.charAt(0)}
+                    </div>
+                    <div className='flex flex-col'>
+                        <span className='opacity-80 font-semibold text-sm'>{user?.name}</span>
+                        <span className='opacity-60 font-semibold text-sm'>{user?.email}</span>
+
+                    </div>
+
+                </div>
+
+
             </aside>
 
             <main className="flex-1 p-8 overflow-auto bg-white">
