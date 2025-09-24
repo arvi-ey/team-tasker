@@ -21,3 +21,16 @@ export const CheckPassWord = async (plainPassword: string,
 export const GenerateToken = async (payload: JwtPayload) => {
     return jwt.sign(payload, process.env.JWT_SECRET!);
 }
+
+
+export const VerifyToken = async (token: string) => {
+
+    const decoded = await new Promise((resolve, reject) => {
+        jwt.verify(token, process.env.JWT_SECRET!, (err, user) => {
+            if (err) return reject(err);
+            resolve(user);
+        });
+    });
+    return decoded;
+
+}

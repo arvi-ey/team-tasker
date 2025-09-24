@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import Loader from '../../common/loader';
+
+import useAuth from '../../hooks/useAuth';
+import type { Signin } from '../../types/usertype';
+
 const SignIn: React.FC = () => {
+
     const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { UserSinIn, loading } = useAuth()
+    const [formData, setFormData] = useState<Signin>({
+        email: "",
+        password: ''
+    })
 
-    const handleSubmit = (e: React.FormEvent) => {
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log({ email, password });
+        await UserSinIn(formData)
     };
 
     return (
@@ -24,9 +33,10 @@ const SignIn: React.FC = () => {
                         <Mail className="absolute top-3 left-3 text-gray-400" size={18} />
                         <input
                             type="email"
+                            name='email'
                             placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                             required
                             className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9088F1] focus:border-[#9088F1] transition"
                         />
@@ -35,10 +45,11 @@ const SignIn: React.FC = () => {
                     <div className="relative">
                         <Lock className="absolute top-3 left-3 text-gray-400" size={18} />
                         <input
+                            name='password'
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                             required
                             className="w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9088F1] focus:border-[#9088F1] transition"
                         />
@@ -51,12 +62,20 @@ const SignIn: React.FC = () => {
                         </button>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full cursor-pointer py-3 rounded-lg text-white font-semibold transition bg-[#9088F1] hover:bg-[#7a70e0]"
-                    >
-                        Sign In
-                    </button>
+                    {
+                        loading ?
+                            <div className='w-full flex justify-center items-center'>
+                                <Loader />
+
+                            </div> :
+
+                            <button
+                                type="submit"
+                                className="w-full cursor-pointer py-3 rounded-lg text-white font-semibold transition bg-indigo-500 hover:bg-indigo-600"
+                            >
+                                Sign In
+                            </button>
+                    }
                 </form>
 
                 <p className="mt-6 text-center text-gray-500">

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react';
+import { Users, Mail, Phone, Lock, Eye, EyeOff, } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import toast from "react-hot-toast";
+import type User from '../../types/usertype';
+import Loader from '../../common/loader';
+
 
 const SignUp: React.FC = () => {
-    const [formData, setFormData] = useState({
+
+
+    const { UserSinUp, loading } = useAuth()
+    const [formData, setFormData] = useState<User>({
         name: '',
         email: '',
         phone: '',
@@ -17,15 +25,17 @@ const SignUp: React.FC = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
+            toast.error('Passwords do not match!');
             return;
         }
+        const payloadData = { ...formData }
+        delete payloadData.confirmPassword
+        await UserSinUp(payloadData)
 
-        console.log(formData);
     };
 
     return (
@@ -37,7 +47,7 @@ const SignUp: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
 
                     <div className="relative">
-                        <User className="absolute top-3 left-3 text-gray-400" size={18} />
+                        <Users className="absolute top-3 left-3 text-gray-400" size={18} />
                         <input
                             type="text"
                             name="name"
@@ -114,13 +124,21 @@ const SignUp: React.FC = () => {
                             {showConfirmPassword ? <EyeOff size={18} className='cursor-pointer' /> : <Eye size={18} className='cursor-pointer' />}
                         </button>
                     </div>
+                    {
+                        loading ?
+                            <div className='w-full flex justify-center items-center'>
+                                <Loader />
 
-                    <button
-                        type="submit"
-                        className="w-full cursor-pointer py-3 rounded-lg text-white font-semibold transition bg-[#9088F1] hover:bg-[#7a70e0]"
-                    >
-                        Sign Up
-                    </button>
+                            </div> :
+
+                            <button
+                                type="submit"
+                                className="w-full cursor-pointer py-3 rounded-lg text-white font-semibold transition bg-indigo-500 hover:bg-indigo-600"
+                            >
+                                Sign Up
+                            </button>
+                    }
+
                 </form>
 
                 <p className="mt-6 text-center text-gray-500">

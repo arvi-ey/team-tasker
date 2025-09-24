@@ -3,6 +3,7 @@ import { catchAsync } from "../middlewares/catchAsync.js";
 import { Request, Response, NextFunction } from 'express';
 import { HashedPassword, CheckPassWord, GenerateToken } from "../utils/authUtil.js";
 import { AppError } from "../utils/AppError.js";
+import jwt from 'jsonwebtoken';
 
 export const UserSignUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const hashedpass = await HashedPassword(req.body.password)
@@ -30,7 +31,7 @@ export const UserSignIn = catchAsync(async (req: Request, res: Response, next: N
     if (!isValidPass) {
         return next(new AppError('Invalid password', 401));
     }
-    const token = GenerateToken({
+    const token = await GenerateToken({
         id: user._id,
         role: user.role
     })
@@ -43,6 +44,41 @@ export const UserSignIn = catchAsync(async (req: Request, res: Response, next: N
     res.status(200).json({
         success: true,
         message: "Logged in successfully",
+        data: user
+    })
+})
+
+
+export const SignOut = catchAsync(async (req: Request, res: Response) => {
+    res.clearCookie("accesstoken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+    });
+    res.status(200).json({
+        success: true,
+        message: "User logged out successfully"
+    })
+
+})
+
+interface JwtPayload {
+    id: string;
+    iat: number;
+    exp: number;
+}
+
+
+
+export const CheckAuth = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies?.accesstoken;
+    if (!token) return next(new AppError('Unauthorized', 404))
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    if (!decoded?.id) return next(new AppError('Invalid token', 401));
+    const user = await User.findById(decoded.id);
+    if (!user) return next(new AppError('User not found', 404))
+    res.status(200).json({
+        success: true,
         data: user
     })
 })

@@ -6,22 +6,30 @@ import SignUp from './components/Auth/SignUp'
 import DashBoard from './components/Dashboard/DashBoard'
 import Analytics from './components/Analytics/Analytics'
 import Projects from './components/Projects/Projects'
+import { Toaster } from 'react-hot-toast'
+import ProtectedRoute from './components/protected/ProtectedRoute'
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<DashBoard />}>
-        <Route index element={<Analytics />} /> {/* default page */}
-        <Route path="projects" element={<Projects />} />
-      </Route>
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
 
 
-      <Route element={<Layout />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
-      </Route>
-    </Routes>
+
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/auth/signup" element={<SignUp />} />
+        </Route>
+        <Route element={<ProtectedRoute />} >
+          <Route path="/" element={<DashBoard />}>
+            <Route index element={<Analytics />} /> {/* default page */}
+            <Route path="projects" element={<Projects />} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
   )
 }
 

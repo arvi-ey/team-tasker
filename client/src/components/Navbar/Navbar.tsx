@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
         <nav className="bg-white text-black p-4 shadow-md sticky top-0 z-50">
             <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap">
 
-                <div className="flex items-center space-x-2 cursor-pointer" onClick={() => Navigate("/")} >
+                <div className="flex items-center space-x-2 cursor-pointer" onClick={() => Navigate("/home")} >
                     <span className="text-xl font-semibold">Team Tasker</span>
                 </div>
                 <ul className="flex space-x-6 items-center">

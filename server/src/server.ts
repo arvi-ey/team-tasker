@@ -3,6 +3,7 @@ dotenv.config();
 import express, { Request, Response } from "express";
 import corsOptions from './cors/corsOption.js';
 import connectDB from './db/dbConnection.js';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { globalError } from './middlewares/errorHandeler.js';
 import AuthRouter from "./routes/auth/authRouter.js"
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 5000;
 // Application lavel middlewares
 app.use(cors(corsOptions))
 app.use(express.json());
+app.use(cookieParser())
 
 
 

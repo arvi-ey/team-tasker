@@ -2,6 +2,7 @@ import { Home, BarChart2, Folder, CheckSquare, Users, LogOut } from 'lucide-reac
 import { NavLink, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 interface DashboardLayoutProps {
     heading?: string;
@@ -11,6 +12,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
     const location = useLocation()
     const pathName = location.pathname.substring(1);
     const Navigate = useNavigate()
+    const { UserSinOut, loading } = useAuth()
 
 
 
@@ -19,8 +21,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
         { name: 'Projects', path: '/projects', icon: <Folder size={20} /> },
         { name: 'Tasks', path: '/tasks', icon: <CheckSquare size={20} /> },
         { name: 'Team', path: '/team', icon: <Users size={20} /> },
-        { name: 'Logout', path: '/logout', icon: <LogOut size={20} /> },
+        { name: 'Logout', path: '/logout', icon: <LogOut size={20} color='red' /> },
     ];
+
+    const Logout = async () => {
+
+
+        await UserSinOut()
+
+    }
 
 
     return (
@@ -37,6 +46,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
                         <NavLink
                             to={item.path}
                             key={item.name}
+                            onClick={(e) => {
+                                if (item.path == '/logout') {
+                                    e.preventDefault();
+                                    Logout()
+
+                                }
+
+                            }}
                             className={({ isActive }) =>
                                 `flex items-center px-4 py-3 rounded-lg font-medium text-gray-700 transition-colors duration-200 ${isActive
                                     ? 'bg-[#9088F1] text-white'
@@ -45,7 +62,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
                             }
                         >
                             {item.icon}
-                            <span className="ml-3">{item.name}</span>
+                            <span className={`ml-3 ${item.name == "Logout" && "text-red-600"} `}>{item.name}</span>
                         </NavLink>
                     ))}
                 </nav>
