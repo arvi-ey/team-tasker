@@ -8,6 +8,7 @@ import Analytics from './components/Analytics/Analytics'
 import Projects from './components/Projects/Projects'
 import { Toaster } from 'react-hot-toast'
 import ProtectedRoute from './components/protected/ProtectedRoute'
+import ProjectForm from './components/Projects/ProjectForm'
 
 function App() {
   return (
@@ -24,8 +25,10 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute />} >
           <Route path="/" element={<DashBoard />}>
-            <Route index element={<Analytics />} /> {/* default page */}
+            <Route index element={<Analytics />} />
             <Route path="projects" element={<Projects />} />
+            <Route path="/projects/create" element={<ProjectForm />} />
+            <Route path="/projects/:id" element={<ProjectForm />} />
           </Route>
         </Route>
       </Routes>

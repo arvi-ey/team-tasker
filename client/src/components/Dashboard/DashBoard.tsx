@@ -56,8 +56,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
                             }}
                             className={({ isActive }) =>
                                 `flex items-center px-4 py-3 rounded-lg font-medium text-gray-700 transition-colors duration-200 ${isActive
-                                    ? 'bg-[#9088F1] text-white'
-                                    : 'hover:bg-[#9088F1]/10 hover:text-[#9088F1]'
+                                    ? 'bg-[#3525eb] text-white'
+                                    : 'hover:bg-[#9088F1]/10 hover:text-[#867cec]'
                                 }`
                             }
                         >
@@ -69,9 +69,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
             </aside>
 
             <main className="flex-1 p-8 overflow-auto bg-white">
-                <div className="pb-3 mb-6 border-b border-gray-200">
-                    <h1 className="text-2xl font-bold text-gray-700">{location.pathname == "/" ? "ANALYTICS" : pathName.toUpperCase()}</h1>
-                </div>
                 <Outlet />
             </main>
 

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
-import Task from './taskModel.js';
+import Task from "./taskModel.js"
 
 export interface ProjectDocument extends Document {
     name: string;
@@ -21,7 +21,7 @@ const projectSchema = new Schema<ProjectDocument>(
             enum: ['pending', 'inProgress', 'completed'],
             default: 'pending'
         },
-        tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+        tasks: [{ type: Schema.Types.ObjectId, ref: 'Task', default: [] }],
     },
     {
         timestamps: true,

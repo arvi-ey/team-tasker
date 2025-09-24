@@ -35,7 +35,7 @@ app.get("/", (req: Request, res: Response) => {
 // All Routes
 
 app.use('/api/v1/auth', AuthRouter)
-app.use('/api/v1/project', ProjectRouter)
+app.use('/api/v1/projects', ProjectRouter)
 
 
 app.use(globalError)

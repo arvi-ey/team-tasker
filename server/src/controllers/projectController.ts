@@ -2,6 +2,9 @@ import Project from "../model/projectModel.js";
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from "../utils/AppError.js";
 import { catchAsync } from "../middlewares/catchAsync.js";
+import Task from "../model/taskModel.js";
+
+
 
 
 export const CreateProject = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -53,7 +56,7 @@ export const GetAllProjects = catchAsync(async (req: Request, res: Response, nex
 
 export const GetSingleProject = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const projectId = req.params.id;
-    const project = await Project.findById(projectId).populate('tasks');
+    const project = await Project.findById(projectId).populate('tasks', null, Task);
 
     if (!project) return next(new AppError("Project not found", 404));
 
